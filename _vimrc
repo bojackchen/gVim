@@ -205,6 +205,12 @@ set lines=40 columns=120
 " Map ,f to close the file without saving.
 map ,f :q!<CR>
 
+" Map ,w to write and close the file.
+map ,w :wq<CR>
+
+" Map ,a to write and close ALL the files.
+map ,a :wqa<CR>
+
 " Map ,z to create fold based on indent.
 map ,z :set foldmethod=indent<CR>
 
