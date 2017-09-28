@@ -227,12 +227,6 @@ map <tab> :bn<CR>
 " Map <Space> to open and close fold in file.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 
-" Ctrl + K/J/H/L to move up/down/left/right in insert mode.
-imap <c-k> <Up>
-imap <c-j> <Down>
-imap <c-h> <Left>
-imap <c-l> <Right>
-
 
 
 "-----------------------------------------------------------------
