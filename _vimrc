@@ -63,15 +63,13 @@ set backspace=indent,eol,start
 " Determine the file type base on its name and possibly its
 " content, allowing for intelligent indent and plugins that
 " are filetype specific.
-filetype on
-filetype plugin on
 filetype plugin indent on
-
-" Turn of the logging in viminfo file
-set viminfo=
 
 " Enable syntax highlighting.
 syntax on
+
+" Turn of the logging in viminfo file
+set viminfo=
 
 " In many terminal emulators the mouse works just fine, thus
 " enable it for convenience.
@@ -97,11 +95,6 @@ set colorcolumn=100
 "
 "-----------------------------------------------------------------
 "
-" When opening a new line and no filetype specific indent is
-" enabled, keep the same indent as the line you are currently
-" on. Useful for READMEs, for example.
-set autoindent
-
 " Better command line completion
 set wildmenu
 
@@ -112,10 +105,14 @@ set ruler
 " Display line number on the left.
 set number
 
+" Display current mode in command line
+set showmode
+
 " Display incomplete commands.
 set showcmd
 
 " Highlight search results.
+set incsearch
 set hlsearch
 
 
@@ -127,12 +124,18 @@ set hlsearch
 " better indentation of your code.
 "
 "-----------------------------------------------------------------
+"
+" When opening a new line and no filetype specific indent is
+" enabled, keep the same indent as the line you are currently
+" on. Useful for READMEs, for example.
+set autoindent
 
-" Indentation settings for using 4 spaces to replace tabs.
+" Indentation settings for using 2 spaces to replace tabs.
 " Do not change 'tabstop' from its default value of 8 to 2.
 set expandtab
-set tabstop=2
+set softtabstop=2
 set shiftwidth=2
+set shiftround
 set smarttab
 
 
@@ -148,6 +151,10 @@ set smarttab
 " Stop certain movements from always going to the first
 " character of a line.
 set nostartofline
+
+" Open new window below and right of the current window
+set splitbelow
+set splitright
 
 " Always display the status line, even if only one window is 
 " displayed.
