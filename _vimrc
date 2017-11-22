@@ -53,32 +53,33 @@ endfunction
 " Ward off unexpected things that my distro may have, as well
 " as sanely reset options when re-source .vimrc.
 " Use Vim settings rather than Vi settings.
-" This must be the first, cause it will change other options
-" as a side effect.
+" This must be put the first, cause it will change other options
 set nocompatible
 
-" Allow backspacing over everything in insert mode.
+" Allow backspacing over autoindent, line breaks and start of insert
+" action in insert mode
 set backspace=indent,eol,start
 
 " Determine the file type base on its name and possibly its
 " content, allowing for intelligent indent and plugins that
-" are filetype specific.
+" are filetype specific
 filetype plugin indent on
 
 " Enable syntax highlighting.
 syntax on
 
-" Turn of the logging in viminfo file
+" Turn off the logging of viminfo file
 set viminfo=
 
 " In many terminal emulators the mouse works just fine, thus
 " enable it for convenience.
 if has('mouse')
-    set mouse=a
+  set mouse=a
 endif
 
-" Ignore case for Ctrl-N
+" Case insensitive search for vim, except when using capital letters
 set ignorecase
+set smartcase
 
 " Set encoding
 set encoding=utf-8
@@ -95,6 +96,9 @@ set colorcolumn=100
 "
 "-----------------------------------------------------------------
 "
+" Easier and better switching between buffers with unsaved changed.
+set hidden
+
 " Better command line completion
 set wildmenu
 
@@ -108,12 +112,20 @@ set number
 " Display current mode in command line
 set showmode
 
-" Display incomplete commands.
+" Display partial commands in the last line of the screen.
 set showcmd
 
-" Highlight search results.
+" Highlight search results. Use <C-L> to temporarily turn off highlight
+" (See the mapping below).
 set incsearch
 set hlsearch
+
+" Instead of failing a command because of unsaved changes, raise a
+" dialogue asking if you wish to save changed files
+set confirm
+
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
 
 
 
@@ -133,6 +145,7 @@ set autoindent
 " Indentation settings for using 2 spaces to replace tabs.
 " Do not change 'tabstop' from its default value of 8 to 2.
 set expandtab
+set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set shiftround
@@ -151,10 +164,6 @@ set smarttab
 " Stop certain movements from always going to the first
 " character of a line.
 set nostartofline
-
-" Open new window below and right of the current window
-set splitbelow
-set splitright
 
 " Always display the status line, even if only one window is 
 " displayed.
@@ -181,7 +190,7 @@ set noswapfile
 set history=50
 
 " Paste for insert mode.
-set pastetoggle=<f2>
+set pastetoggle=<F2>
 
 " Add dictionary to Vim to enable the auto
 " completion of words.
@@ -191,10 +200,10 @@ set pastetoggle=<f2>
 
 " Color scheme and GUI font
 colorscheme evening
-set guifont=Monaco:h11
+set guifont=Monaco:h10
 
 " Set default window position, length and width
-winpos 100 10
+winpos 100 100
 set lines=40 columns=120
 
 
@@ -224,8 +233,6 @@ map ,z :set foldmethod=indent<CR>
 " Map ,ss to start spell check.
 map ,ss :setlocal spell!<CR>
 
-" Switch between buffers with unsaved changed.
-set hidden
 " Map Shift-Tab to go to previous buffer.
 map <s-tab> :bp<CR>
 " Map Tab to go to next buffer.
@@ -233,6 +240,10 @@ map <tab> :bn<CR>
 
 " Map <Space> to open and close fold in file.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+
+" Map <C-L> (redraw screen) to also turn off search highlighting until
+" the next search
+nnoremap <C-L> :nohl<CR><C-L>
 
 
 
@@ -302,7 +313,7 @@ let g:tagbar_width=30
 "-----------------------------------------------------------------
 " tComment plugin
 "
-" Use <c-c> to comment and uncomment.
+" Use <C-g> to comment and uncomment.
 "
 "-----------------------------------------------------------------
 "
