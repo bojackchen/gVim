@@ -200,7 +200,7 @@ set pastetoggle=<F2>
 
 " Color scheme and GUI font
 colorscheme evening
-set guifont=Monaco:h10
+set guifont=Monofur:h12
 
 " Set default window position, length and width
 winpos 100 100
