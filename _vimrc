@@ -1,4 +1,4 @@
------------------------------------------------------------------
+"-----------------------------------------------------------------
 " Author: Bojack F. CHEN
 " Description: My personal windows gvim configuration file
 "
