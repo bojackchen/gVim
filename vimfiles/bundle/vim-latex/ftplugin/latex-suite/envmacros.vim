@@ -85,7 +85,7 @@ function! <SID>Tex_EnvMacros(lhs, submenu, name)
 
 		if g:Tex_EnvironmentMaps && !exists('s:doneOnce')
 			call IMAP(a:lhs, "\<C-r>=Tex_PutEnvironment('".a:name."')\<CR>", 'tex')
-			exec 'vnoremap <silent> '.vlhs.' '.vrhs
+			exec 'xnoremap <silent> '.vlhs.' '.vrhs
 		endif
 
 	endif
@@ -124,7 +124,7 @@ function! <SID>Tex_SpecialMacros(lhs, submenu, name, irhs, ...)
 
 		if g:Tex_EnvironmentMaps && !exists('s:doneOnce')
 			call IMAP(a:lhs, a:irhs, 'tex')
-			exec 'vnoremap '.vlhs.' '.vrhs
+			exec 'xnoremap '.vlhs.' '.vrhs
 		endif
 
 	endif
@@ -147,7 +147,7 @@ function! <SID>Tex_SectionMacros(lhs, name)
 	let vrhs = "\<C-\\>\<C-N>:call VEnclose('\\".a:name."{', '}', '', '')<CR>"
 
 	if g:Tex_SectionMaps && !exists('s:doneOnce')
-		exe 'vnoremap '.vlhs.' '.vrhs
+		exe 'xnoremap '.vlhs.' '.vrhs
 		call IMAP (a:lhs, "\\".a:name.'{<++>}' . s:end_with_cr . '<++>', 'tex')
 	endif
 
@@ -285,7 +285,7 @@ call s:Tex_SpecialMacros('EPI', '', 'picture', s:picture)
 " }}}
 
 if g:Tex_CatchVisMapErrors
-	exe 'vnoremap '.g:Tex_Leader2."   :\<C-u>call ExecMap('".g:Tex_Leader2."', 'v')\<CR>"
+	exe 'xnoremap '.g:Tex_Leader2."   :\<C-u>call ExecMap('".g:Tex_Leader2."', 'v')\<CR>"
 endif
 
 " ==============================================================================
@@ -581,15 +581,15 @@ function! Tex_PutEnvironment(env)
 			return IMAP_PutTextWithMovement(b:Tex_Env_{a:env})
 		elseif exists("g:Tex_Env_{'".a:env."'}")
 			return IMAP_PutTextWithMovement(g:Tex_Env_{a:env})
-		elseif a:env =~ '^\%(theorem\|definition\|lemma\|proposition\|corollary\|assumption\|remark\|equation\|align\*\|align\>\|multline\)$'
+		elseif a:env =~ '^\%(theorem\|definition\|lemma\|proposition\|corollary\|assumption\|remark\|equation\|align\*\|align\>\|multline\|subequations\)$'
 			return Tex_standard_env(a:env)
-		elseif a:env =~ '^\%(enumerate\\|itemize\\|theindex\\|trivlist\)$'
+		elseif a:env =~ '^\%(enumerate\|itemize\|theindex\|trivlist\)$'
 			return Tex_itemize(a:env)
-		elseif a:env =~ '^\%(table\\|table*\)$'
+		elseif a:env =~ '^\%(table\|table*\)$'
 			return Tex_table(a:env)
-		elseif a:env =~ '^\%(tabular\\|tabular*\\|array\\|array*\)$'
+		elseif a:env =~ '^\%(tabular\|tabular*\|array\|array*\)$'
 			return Tex_tabular(a:env)
-		elseif a:env =~# '^\%(description\\|figure\\|list\\|document\\|minipage\\|thebibliography\)$'
+		elseif a:env =~# '^\%(description\|figure\|list\|document\|minipage\|thebibliography\)$'
 			" Call spezialized functions
 			exe 'return Tex_'.a:env.'(a:env)'
 		elseif a:env == '\['

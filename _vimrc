@@ -1,47 +1,20 @@
-set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
-behave mswin
-
-set diffexpr=MyDiff()
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
-
-
 "-----------------------------------------------------------------
 " Author: Bojack F. CHEN
-" Description: My personal vim configuration file
+" Description: My personal windows gvim configuration file
 "
 "-----------------------------------------------------------------
 "
 "-----------------------------------------------------------------
-" Start of the personal vim configuration
+" Start of the _vimrc file.
 "
 "-----------------------------------------------------------------
 "
-"
-"
+" source $VIMRUNTIME/vimrc_example.vim
+" source $VIMRUNTIME/mswin.vim
+" behave mswin
+
+
+
 " ----------------------------------------------------------------
 " Features
 "
@@ -68,9 +41,6 @@ filetype plugin indent on
 " Enable syntax highlighting.
 syntax on
 
-" Turn off the logging of viminfo file
-set viminfo=
-
 " In many terminal emulators the mouse works just fine, thus
 " enable it for convenience.
 if has('mouse')
@@ -80,9 +50,6 @@ endif
 " Case insensitive search for vim, except when using capital letters
 set ignorecase
 set smartcase
-
-" Set encoding
-set encoding=utf-8
 
 " Set color column at specific character count
 set colorcolumn=100
@@ -98,6 +65,11 @@ set colorcolumn=100
 "
 " Easier and better switching between buffers with unsaved changed.
 set hidden
+
+" When opening a new line and no filetype specific indent is
+" enabled, keep the same indent as the line you are currently
+" on. Useful for READMEs, for example.
+set autoindent
 
 " Better command line completion
 set wildmenu
@@ -137,11 +109,6 @@ set visualbell
 "
 "-----------------------------------------------------------------
 "
-" When opening a new line and no filetype specific indent is
-" enabled, keep the same indent as the line you are currently
-" on. Useful for READMEs, for example.
-set autoindent
-
 " Indentation settings for using 2 spaces to replace tabs.
 " Do not change 'tabstop' from its default value of 8 to 2.
 set expandtab
@@ -170,7 +137,7 @@ set nostartofline
 set laststatus=2
 
 " Display file name and line number in the status line.
-set statusline=%F\ %y:\ %l/%L\ %c\ %P
+set statusline=%F\ %y:\ %l/%L,\ %c\ %=\ line:\ %p%%/display:\ %P
 
 " Set the command window height to 2 lines, to avoid many cases
 " of having to 'Press <Enter> to continue'.
@@ -204,7 +171,7 @@ set guifont=Monofur:h12
 
 " Set default window position, length and width
 winpos 100 100
-set lines=40 columns=120
+set lines=48 columns=120
 
 
 
@@ -216,7 +183,7 @@ set lines=40 columns=120
 "-----------------------------------------------------------------
 "
 " Map ,e to edit the vimrc file.
-"nnoremap ,e :gvim C:\Program\ Files\gVim\_vimrc<CR>
+nnoremap ,e :e C:\Program\ Files\ (x86)\Vim\_vimrc<CR>
 
 " Map ,f to close the file without saving.
 map ,f :q!<CR>
@@ -238,11 +205,11 @@ map <s-tab> :bp<CR>
 " Map Tab to go to next buffer.
 map <tab> :bn<CR>
 
-" Map <Space> to open and close fold in file.
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+" Map <space> to open and close fold in file.
+nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<space>")<CR>
 
-" Map <C-L> (redraw screen) to also turn off search highlighting until
-" the next search
+" Map <C-L> (redraw screen) to also turn off search highlighting
+" until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
 
@@ -255,8 +222,8 @@ nnoremap <C-L> :nohl<CR><C-L>
 "
 "-----------------------------------------------------------------
 "
-" When vimrc is modified, reload it.
-"autocmd! bufwritepost vimrc source ~/.vim/vimrc
+" When _vimrc is modified, reload it.
+autocmd! bufwritepost _vimrc source C:\Program Files (x86)\Vim\_vimrc
 
 
 
@@ -275,62 +242,152 @@ call pathogen#infect()
 
 
 "-----------------------------------------------------------------
-" taglsit plugin
+" SuperTab plugin
 "
-" Create tags according to the file.
+" SuperTab allows you to perform all your insert completion
+" using <tab>
 "
 "-----------------------------------------------------------------
 "
-" Map F8 to toggle taglist.
-nnoremap <f8> :TlistToggle<CR>
+" Set <c-p> to go forward (previous), <c-n> to go backward (next).
+let g:SuperTabMappingForward  = '<c-p>'
+let g:SuperTabMappingBackward = '<c-n>'
 
-" Always show taglist on the right of the main window.
-let Tlist_Use_Right_Window=1
+" Enable SuperTab longest match support
+let g:SuperTabLongestEnhanced = 1
 
-" Exit vim if taglist window is the only window.
-let Tlist_Exit_OnlyWindow=1
 
-" Set the width of taglist window to 30
-let Tlist_WinWidth=30
+
+"-----------------------------------------------------------------
+" vim-gitgutter plugin
+"
+" Display the difference in real time.
+"
+"-----------------------------------------------------------------
+"
+" Set the update time for display.
+set updatetime=1000
+
+
+
+"-----------------------------------------------------------------
+" CtrlP plugin
+"
+" Full path fuzzy file/buffer/mru/tag finder.
+"
+"-----------------------------------------------------------------
+"
+" Map ctrl + p to invoke CtrlP
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" Set CtrlP working directory to be the directory of the current file
+let g:ctrlp_working_path_mode = 'ra'
+
+" If a file is already open, open it again in a new pane
+let g:ctrlp_switch_buffer = 'et'
+
+
+
+"-----------------------------------------------------------------
+" syntastic plugin
+"
+" This is a syntax checking plugin.
+"
+"-----------------------------------------------------------------
+"
+" Add information to status line
+set statusline +=%#warningmsg#
+set statusline +=%{SyntasticStatuslineFlag()}
+set statusline +=%*
+
+" Set syntax checking options
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+
+
+
+"-----------------------------------------------------------------
+" auto-pairs plugin
+"
+" Auto close paired characters.
+"
+"-----------------------------------------------------------------
+"
+" Disable fly mode
+let g:AutoPairsFlyMode = 0
 
 
 
 "-----------------------------------------------------------------
 " tagbar plugin
 "
-" Create tags according to the file. Similar to taglist
+" Create tags according to the file. Similar to taglist.
 "
 "-----------------------------------------------------------------
 "
-" Map F9 to toggle tagbar
-nnoremap <f9> :TagbarToggle<CR>
+" Map F7 to toggle taglist.
+nnoremap <F7> :TagbarToggle<CR>
 
-" Set the width of tagbar window to 30
-let g:tagbar_width=30
+" Set the width of tagbar window to 32
+let g:tagbar_width = 32
 
 
 
 "-----------------------------------------------------------------
-" tComment plugin
+" nerdcommenter plugin
 "
-" Use <C-g> to comment and uncomment.
+" Use <C-m> to comment and uncomment.
 "
 "-----------------------------------------------------------------
 "
-" Use Ctrl-G to comment and uncomment.
-map <C-g> gcc
+" Map ctrl + m to toggle comment.
+map <C-m> <leader>c<space>
+
+" Add spaces after comment delimiters by default.
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments.
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left
+let g:NERDDefaultAlign = 'left'
+
+" Enable trimming of trailing white space when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
 
 
 
 "-----------------------------------------------------------------
 " acp plugin
 "
-" AutoCompletionPopup for Vim.
-"
+" Auto completion popup (AutoComplPop) for vim
+" 
 "-----------------------------------------------------------------
 "
-" Set acp for snippets.
-let g:acp_behaviourSnipmateLength=1
+" Set up acp for snipMate plugin.
+let g:acp_behaviorSnipmateLength = 1
+
+" Disable auto-popup by moving cursor in insert mode.
+let g:acp_mappingDriven = 1
+
+
+
+"-----------------------------------------------------------------
+" undotree plugin
+"
+" List out all the undos.
+" 
+"-----------------------------------------------------------------
+"
+" Map F5 to toggle the undotree window.
+nnoremap <F5> :UndotreeToggle<CR>
+
+" If undotree is opened, it is likely that interaction is expected.
+" Set focus on undotree windows.
+let g:undotree_SetFocusWhenToggle = 1
 
 
 
@@ -341,20 +398,41 @@ let g:acp_behaviourSnipmateLength=1
 " 
 "-----------------------------------------------------------------
 "
-" Map f7 to toggle the NERDTree window.
-map <f7> :NERDTreeToggle<CR>
+" Map F6 to toggle the NERDTree window.
+nnoremap <F6> :NERDTreeToggle<CR>
+
+" Let nerdtree show hidden files
+let g:NERDTreeShowHidden = 1
+
+" Close vim when NERDTree windows is the last window.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+
+"-----------------------------------------------------------------
+" vim-airline plugin
+"
+" Powerful vim statusline style.
+" 
+"-----------------------------------------------------------------
+"
+" Set vim airline style
+let g:airline_theme = 'dark'
 
 
 
 "-----------------------------------------------------------------
 " vim-latex plugin
 "
-" vim-latex-suite settings.
+" latex-suite for vim.
 "
 "-----------------------------------------------------------------
 "
-" Set .tex file to 'latex' filetype.
-let g:tex_flavor='latex'
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files
+" defaults to 'plaintex' instead of 'tex', which results in
+" vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor = 'latex'
 let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_MultipleCompileFormats= 'pdf'
@@ -363,6 +441,6 @@ let g:Tex_ViewRule_pdf = 'SumatraPDF'
 
 
 "-----------------------------------------------------------------
-" End of the vimrc file.
+" End of the _vimrc file.
 "
 "-----------------------------------------------------------------

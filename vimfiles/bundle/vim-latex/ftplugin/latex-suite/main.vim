@@ -104,6 +104,7 @@ if !exists('s:doneMappings')
 	call IMAP(g:Tex_Leader.'l', '\lambda', 'tex')
 	call IMAP(g:Tex_Leader.'m', '\mu', 'tex')
 	call IMAP(g:Tex_Leader.'n', '\nu', 'tex')
+	call IMAP(g:Tex_Leader.'o', '\omicron', 'tex')
 	call IMAP(g:Tex_Leader.'p', '\pi', 'tex')
 	call IMAP(g:Tex_Leader.'q', '\theta', 'tex')
 	call IMAP(g:Tex_Leader.'r', '\rho', 'tex')
@@ -112,22 +113,37 @@ if !exists('s:doneMappings')
 	call IMAP(g:Tex_Leader.'u', '\upsilon', 'tex')
 	call IMAP(g:Tex_Leader.'v', '\varsigma', 'tex')
 	call IMAP(g:Tex_Leader.'w', '\omega', 'tex')
-	call IMAP(g:Tex_Leader.'w', '\wedge', 'tex')  " AUCTEX style
 	call IMAP(g:Tex_Leader.'x', '\xi', 'tex')
 	call IMAP(g:Tex_Leader.'y', '\psi', 'tex')
 	call IMAP(g:Tex_Leader.'z', '\zeta', 'tex')
 	" not all capital greek letters exist in LaTeX!
 	" reference: http://www.giss.nasa.gov/latex/ltx-405.html
+	" But we still expand all the letters and give choices to users
+	call IMAP(g:Tex_Leader.'A', '\Alpha', 'tex')
+	call IMAP(g:Tex_Leader.'B', '\Beta', 'tex')
+	call IMAP(g:Tex_Leader.'C', '\Chi', 'tex')
 	call IMAP(g:Tex_Leader.'D', '\Delta', 'tex')
-	call IMAP(g:Tex_Leader.'F', '\Phi', 'tex')
+	call IMAP(g:Tex_Leader.'E', '\Varepsilon', 'tex')
+	call IMAP(g:Tex_Leader.'F', '\Varphi', 'tex')
 	call IMAP(g:Tex_Leader.'G', '\Gamma', 'tex')
-	call IMAP(g:Tex_Leader.'Q', '\Theta', 'tex')
+	call IMAP(g:Tex_Leader.'H', '\Eta', 'tex')
+	call IMAP(g:Tex_Leader.'I', '\Iota', 'tex')
+	call IMAP(g:Tex_Leader.'K', '\Kappa', 'tex')
 	call IMAP(g:Tex_Leader.'L', '\Lambda', 'tex')
+	call IMAP(g:Tex_Leader.'M', '\Mu', 'tex')
+	call IMAP(g:Tex_Leader.'N', '\Nu', 'tex')
+	call IMAP(g:Tex_Leader.'O', '\Omicron', 'tex')
+	call IMAP(g:Tex_Leader.'P', '\Pi', 'tex')
+	call IMAP(g:Tex_Leader.'Q', '\Theta', 'tex')
+	call IMAP(g:Tex_Leader.'R', '\Rho', 'tex')
+	call IMAP(g:Tex_Leader.'S', '\Sigma', 'tex')
+	call IMAP(g:Tex_Leader.'T', '\Tau', 'tex')
+	call IMAP(g:Tex_Leader.'U', '\Upsilon', 'tex')
+	call IMAP(g:Tex_Leader.'V', '\Varsigma', 'tex')
+	call IMAP(g:Tex_Leader.'W', '\Omega', 'tex')
 	call IMAP(g:Tex_Leader.'X', '\Xi', 'tex')
 	call IMAP(g:Tex_Leader.'Y', '\Psi', 'tex')
-	call IMAP(g:Tex_Leader.'S', '\Sigma', 'tex')
-	call IMAP(g:Tex_Leader.'U', '\Upsilon', 'tex')
-	call IMAP(g:Tex_Leader.'W', '\Omega', 'tex')
+	call IMAP(g:Tex_Leader.'Z', '\Zeta', 'tex')
 	" }}}
 	" ProtectLetters: sets up identity maps for things like ``a {{{
 	" " Description: If we simply do
@@ -162,10 +178,10 @@ if !exists('s:doneMappings')
 	" result in the region being enclosed in \begin{verbatim}, \end{verbatim},
 	" whereas in characterise visual mode, the thingie is enclosed in \verb|
 	" and |.
-	exec 'vnoremap <silent> '.g:Tex_Leader."( \<C-\\>\<C-N>:call VEnclose('\\left( ', ' \\right)', '\\left(', '\\right)')\<CR>"
-	exec 'vnoremap <silent> '.g:Tex_Leader."[ \<C-\\>\<C-N>:call VEnclose('\\left[ ', ' \\right]', '\\left[', '\\right]')\<CR>"
-	exec 'vnoremap <silent> '.g:Tex_Leader."{ \<C-\\>\<C-N>:call VEnclose('\\left\\{ ', ' \\right\\}', '\\left\\{', '\\right\\}')\<CR>"
-	exec 'vnoremap <silent> '.g:Tex_Leader."$ \<C-\\>\<C-N>:call VEnclose('$', '$', '\\[', '\\]')\<CR>"
+	exec 'xnoremap <silent> '.g:Tex_Leader."( \<C-\\>\<C-N>:call VEnclose('\\left( ', ' \\right)', '\\left(', '\\right)')\<CR>"
+	exec 'xnoremap <silent> '.g:Tex_Leader."[ \<C-\\>\<C-N>:call VEnclose('\\left[ ', ' \\right]', '\\left[', '\\right]')\<CR>"
+	exec 'xnoremap <silent> '.g:Tex_Leader."{ \<C-\\>\<C-N>:call VEnclose('\\left\\{ ', ' \\right\\}', '\\left\\{', '\\right\\}')\<CR>"
+	exec 'xnoremap <silent> '.g:Tex_Leader."$ \<C-\\>\<C-N>:call VEnclose('$', '$', '\\[', '\\]')\<CR>"
 	" }}}
 end
 
@@ -401,7 +417,7 @@ function! Tex_GetMainFileName(...)
 	" move up the directory tree until we find a .latexmain file.
 	" TODO: Should we be doing this recursion by default, or should there be a
 	"       setting?
-	while glob('*.latexmain') == ''
+	while glob('*.latexmain',v:true) == ''
 		let dirmodifier = dirmodifier.':h'
 		let dirNew = fnameescape(expand(dirmodifier))
 		" break from the loop if we cannot go up any further.
@@ -412,7 +428,7 @@ function! Tex_GetMainFileName(...)
 		exe 'cd '.dirLast
 	endwhile
 
-	let lheadfile = glob('*.latexmain')
+	let lheadfile = glob('*.latexmain',v:true)
 	if lheadfile != ''
 		" Remove the trailing .latexmain part of the filename... We never want
 		" that.

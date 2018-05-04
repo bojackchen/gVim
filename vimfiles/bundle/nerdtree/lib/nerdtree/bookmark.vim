@@ -280,36 +280,42 @@ endfunction
 " FUNCTION: Bookmark.str() {{{1
 " Get the string that should be rendered in the view for this bookmark
 function! s:Bookmark.str()
-    let pathStrMaxLen = winwidth(g:NERDTree.GetWinNum()) - 4 - len(self.name)
+    let pathStrMaxLen = winwidth(g:NERDTree.GetWinNum()) - 4 - strdisplaywidth(self.name)
     if &nu
         let pathStrMaxLen = pathStrMaxLen - &numberwidth
     endif
 
     let pathStr = self.path.str({'format': 'UI'})
-    if len(pathStr) > pathStrMaxLen
-        let pathStr = '<' . strpart(pathStr, len(pathStr) - pathStrMaxLen)
+    if strdisplaywidth(pathStr) > pathStrMaxLen
+        while strdisplaywidth(pathStr) > pathStrMaxLen && strchars(pathStr) > 0
+            let pathStr = substitute(pathStr, '^.', '', '')
+        endwhile
+        let pathStr = '<' . pathStr
     endif
     return '>' . self.name . ' ' . pathStr
 endfunction
 
 " FUNCTION: Bookmark.toRoot(nerdtree) {{{1
-" Make the node for this bookmark the new tree root
+" Set the root of the given NERDTree to the node for this Bookmark. If a node
+" for this Bookmark does not exist, a new one is initialized.
 function! s:Bookmark.toRoot(nerdtree)
     if self.validate()
         try
-            let targetNode = self.getNode(a:nerdtree, 1)
+            let l:targetNode = self.getNode(a:nerdtree, 1)
+            call l:targetNode.closeChildren()
         catch /^NERDTree.BookmarkedNodeNotFoundError/
-            let targetNode = g:NERDTreeFileNode.New(s:Bookmark.BookmarkFor(self.name).path, a:nerdtree)
+            let l:targetNode = g:NERDTreeFileNode.New(s:Bookmark.BookmarkFor(self.name).path, a:nerdtree)
         endtry
-        call a:nerdtree.changeRoot(targetNode)
+        call a:nerdtree.changeRoot(l:targetNode)
     endif
 endfunction
 
 " FUNCTION: Bookmark.ToRoot(name, nerdtree) {{{1
-" Make the node for this bookmark the new tree root
+" Class method that makes the Bookmark with the given name the root of
+" specified NERDTree.
 function! s:Bookmark.ToRoot(name, nerdtree)
-    let bookmark = s:Bookmark.BookmarkFor(a:name)
-    call bookmark.toRoot(a:nerdtree)
+    let l:bookmark = s:Bookmark.BookmarkFor(a:name)
+    call l:bookmark.toRoot(a:nerdtree)
 endfunction
 
 " FUNCTION: Bookmark.validate() {{{1
