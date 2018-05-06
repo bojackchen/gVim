@@ -291,26 +291,6 @@ let g:ctrlp_switch_buffer = 'et'
 
 
 "-----------------------------------------------------------------
-" syntastic plugin
-"
-" This is a syntax checking plugin.
-"
-"-----------------------------------------------------------------
-"
-" Add information to status line
-set statusline +=%#warningmsg#
-set statusline +=%{SyntasticStatuslineFlag()}
-set statusline +=%*
-
-" Set syntax checking options
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list            = 1
-let g:syntastic_check_on_open            = 1
-let g:syntastic_check_on_wq              = 0
-
-
-
-"-----------------------------------------------------------------
 " auto-pairs plugin
 "
 " Auto close paired characters.
