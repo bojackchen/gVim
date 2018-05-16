@@ -40,12 +40,12 @@ call pathogen#infect()
 " -> SuperTab
 "
 " SuperTab allows you to perform all your insert completion
-" needs using <tab>
+" needs using Tab
 " --------------------------------------------------------------
-" Set Ctrl + p to go forward (previous) and Ctrl + n to
+" Set Ctrl + P to go forward (previous) and Ctrl + N to
 " go backward (next)
-let g:SuperTabMappingForward  = "<C-p>"
-let g:SuperTabMappingBackward = "<C-n>"
+let g:SuperTabMappingForward  = "<C-P>"
+let g:SuperTabMappingBackward = "<C-N>"
 
 " Enable SuperTab longest match support
 let g:SuperTabLongestEnhanced = 1
@@ -61,10 +61,10 @@ let g:SuperTabLongestEnhanced = 1
 set updatetime=800
 
 " Map ,d to toggle gitgutter
-noremap <silent> <leader>d :GitGutterToggle<CR>
+nmap <silent> <leader>d :GitGutterToggle<CR>
 
 " Map ,l to toggle line highlight
-noremap <silent> <leader>l :GitGutterLineHighlightsToggle<CR>
+nmap <silent> <leader>l :GitGutterLineHighlightsToggle<CR>
 
 
 " --------------------------------------------------------------
@@ -72,21 +72,21 @@ noremap <silent> <leader>l :GitGutterLineHighlightsToggle<CR>
 "
 " Full path fuzzy file/buffer/mru/tag finder
 " --------------------------------------------------------------
-" Map Ctrl + p to invoke CtrlP
-let g:ctrlp_map = "<C-p>"
+" Map Ctrl + P to invoke CtrlP
+let g:ctrlp_map = "<C-P>"
 let g:ctrlp_cmd = "CtrlP"
 
-" Use Ctrl + b to invoke CtrlP find in buffer
-map <C-b> :CtrlPBuffer<CR>
+" Use Ctrl + B to invoke CtrlP find in buffer
+nmap <C-B> :CtrlPBuffer<CR>
 
-" Use Ctrl + m to invode CtrlP find in MRU
-map <C-m> :CtrlPMRU<CR>
+" Use Ctrl + M to invode CtrlP find in MRU
+nmap <C-M> :CtrlPMRU<CR>
 
-" User Ctrl + a to invoke CtrlP find in all
-map <C-a> :CtrlPMixed<CR>
+" Use Ctrl + A to invoke CtrlP find in all
+nmap <C-A> :CtrlPMixed<CR>
 
 " Set CtrlP maximum window height
-let g:ctrlp_max_height = 16
+let g:ctrlp_max_height = 12
 
 " Ignore several file types when using CtrlP
 let g:ctrlp_custom_ignore = "node_modules\|\.DS_Store\|\.git"
@@ -113,7 +113,7 @@ let g:AutoPairsFlyMode = 0
 "
 " VIM plugin to display tags in a window ordered by scope
 " --------------------------------------------------------------
-" Map <F7> to toggle tagbar
+" Map F7 to toggle tagbar
 nmap <F7> :TagbarToggle<CR>
 
 " Set the width of the tagbar window to 32
@@ -125,8 +125,8 @@ let g:tagbar_width = 32
 "
 " VIM plugin for intensely orgasmic commenting
 " --------------------------------------------------------------
-" Map Ctrl + c to toggle comment
-nmap <C-c> <leader>c<space>
+" Map Ctrl + C to toggle comment
+nmap <C-C> <leader>c<space>
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -158,7 +158,7 @@ let g:acp_mappingDriven = 1
 "
 " The ultimate undo history visualizer for VIM
 " --------------------------------------------------------------
-" Map <F5> to toggle the undotree window.
+" Map F5 to toggle the undotree window.
 nmap <F5> :UndotreeToggle<CR>
 
 " Set the width of the undotree window
@@ -179,7 +179,7 @@ let g:undotree_ShortIndicators = 1
 "
 " A visualized tree explorer plugin for VIM
 " --------------------------------------------------------------
-" Map <F6> to toggle the NERDTree window
+" Map F6 to toggle the NERDTree window
 nmap <F6> :NERDTreeToggle<CR>
 
 " Map ,nf to nerdtree find
@@ -213,9 +213,9 @@ let g:airline#extensions#tabline#enabled = 1
 " Enhanced LaTeX support for VIM
 " --------------------------------------------------------------
 " OPTIONAL: Starting from VIM 7, the filetype of empty .tex
-" files defaults to "plaintex" instead of "tex", which results
+" files defaults to 'plaintex' instead of 'tex', which results
 " in vim-latex not being loaded
-" The following changes the default filetype back to "tex":
+" The following changes the default filetype back to 'tex':
 let g:tex_flavor = "latex"
 let g:Tex_CompileRule_pdf = "pdflatex -interaction=nonstopmode $*"
 let g:Tex_DefaultTargetFormat = "pdf"
