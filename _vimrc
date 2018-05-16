@@ -1,428 +1,364 @@
-"-----------------------------------------------------------------
+" --------------------------------------------------------------
 " Author: Bojack F. CHEN
-" Description: My personal windows gvim configuration file
 "
-"-----------------------------------------------------------------
+" Description: This is my personal VIM configuration file.
+" Note that plugin configurations are included by sourcing
+" another file named 'plugin', where plugin configurations
+" are placed.
 "
-"-----------------------------------------------------------------
-" Start of the _vimrc file.
+" Github repository: https://github.com/bojackchen/vim.git
 "
-"-----------------------------------------------------------------
+" Personal page: https://bojackchen.github.io
 "
-" source $VIMRUNTIME/vimrc_example.vim
-" source $VIMRUNTIME/mswin.vim
-" behave mswin
+"
+" Sections:
+"   -> General
+"   -> VIM user interface
+"   -> Color and font
+"   -> Backup, undo and swap
+"   -> Fold, tab and indent
+"   -> Visual mode
+"   -> Movement, tab and buffer
+"   -> Status line
+"   -> Editing mapping
+"   -> Spell check
+"   -> Misc
+"   -> Plugin
+"   -> Function
+"
+" --------------------------------------------------------------
 
 
-
-" ----------------------------------------------------------------
-" Features
-"
-" These options enable many features in Vim, that no user will
-" live without.
-"
-" ----------------------------------------------------------------
-"
+" --------------------------------------------------------------
+" -> General
+" --------------------------------------------------------------
 " Ward off unexpected things that my distro may have, as well
-" as sanely reset options when re-source .vimrc.
-" Use Vim settings rather than Vi settings.
-" This must be put the first, cause it will change other options
+" as safely reset options when re-source .vimrc
+" Use Vim settings rather than Vi settings
+" This must be put at the first, because it will change other
+" options
 set nocompatible
 
-" Allow backspacing over autoindent, line breaks and start of insert
-" action in insert mode
-set backspace=indent,eol,start
+" Keep 64 lines of command line history
+set history=64
 
 " Determine the file type base on its name and possibly its
 " content, allowing for intelligent indent and plugins that
 " are filetype specific
 filetype plugin indent on
 
-" Enable syntax highlighting.
-syntax on
+" Auto read the file when a file is changed from the outside
+set autoread
 
+" Redefine the map leader from '\' to ','
+let mapleader = ","
+
+" :W sudo saves the file (useful for handling the
+" permission-denied error)
+command! W w !sudo tee % > /dev/null
+
+
+" --------------------------------------------------------------
+" -> VIM user interface
+" --------------------------------------------------------------
 " In many terminal emulators the mouse works just fine, thus
 " enable it for convenience.
 if has('mouse')
   set mouse=a
 endif
 
-" Case insensitive search for vim, except when using capital letters
-set ignorecase
-set smartcase
-
-" Set color column at specific character count
-set colorcolumn=100
-
-
-
-"-----------------------------------------------------------------
-" Must have options
-"
-" These options are highly recommended.
-"
-"-----------------------------------------------------------------
-"
-" Easier and better switching between buffers with unsaved changed.
-set hidden
-
-" When opening a new line and no filetype specific indent is
-" enabled, keep the same indent as the line you are currently
-" on. Useful for READMEs, for example.
-set autoindent
-
-" Better command line completion
-set wildmenu
-
-" Display the cursor position on the last line of the screen or
-" in the status line of the window.
-set ruler
-
-" Display line number on the left.
-set number
-
-" Display current mode in command line
+" Display current mode at the bottom line
 set showmode
 
 " Display partial commands in the last line of the screen.
 set showcmd
 
-" Highlight search results. Use <C-L> to temporarily turn off highlight
-" (See the mapping below).
-set incsearch
-set hlsearch
+" Set 8 lines to the cursor - when moving vertically using j/k
+set scrolloff=8
 
-" Instead of failing a command because of unsaved changes, raise a
-" dialogue asking if you wish to save changed files
-set confirm
+" Turn on wild menu for better command line completion
+set wildmenu
 
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,.DS_Store
 
+" Highlight current line with bold font, darkgray background
+" and white foreground
+set cursorline
+hi CursorLine term=bold cterm=bold ctermbg=DarkGray ctermfg=White
 
+" Display the cursor position on the last line of the screen or
+" in the status line of the window.
+set ruler
 
-"-----------------------------------------------------------------
-" Indentation options
-"
-" These options are set upon personal preferences, to make a
-" better indentation of your code.
-"
-"-----------------------------------------------------------------
-"
-" Indentation settings for using 2 spaces to replace tabs.
-" Do not change 'tabstop' from its default value of 8 to 2.
-set expandtab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set shiftround
-set smarttab
-
-
-
-"-----------------------------------------------------------------
-" Usability options
-"
-" These options enhance the usability of Vim. Set up your
-" personal preferences here.
-"
-"-----------------------------------------------------------------
-"
-" Stop certain movements from always going to the first
-" character of a line.
-set nostartofline
-
-" Always display the status line, even if only one window is 
-" displayed.
-set laststatus=2
-
-" Display file name and line number in the status line.
-set statusline=%F\ %y:\ %l/%L,\ %c\ %=\ line:\ %p%%/display:\ %P
+" Display line number on the left
+set number
 
 " Set the command window height to 2 lines, to avoid many cases
 " of having to 'Press <Enter> to continue'.
 set cmdheight=2
 
-" Highlight the current line
-set cursorline
+" Easier and better switch between buffers with unsaved changed
+set hidden
 
-" No backup file (*~) and undo file (*.un~).
-set nobackup
-set noundofile
+" Allow backspacing over autoindent, line breaks and start of
+" insert action in insert mode
+set backspace=indent,eol,start
 
-" No swap file.
-set noswapfile
+" Allow left, right, h and l to go cross lines automatically
+set whichwrap+=<,>,h,l
 
-" Keep 50 lines of command line history
-set history=50
+" Case insensitive search for vim, except when using
+" capital letters
+set ignorecase
 
-" Paste for insert mode.
-set pastetoggle=<F2>
+" When searching try to be smart about cases
+set smartcase
 
-" Add dictionary to Vim to enable the auto
-" completion of words.
-" Ctrl-X + Ctrl-K to wake up the autocompletion of words
-" in the dictionary.
-"set dictionary+=/usr/share/dict/words
+" Highlight search results. Use <C-L> to temporarily turn off
+" highlight (See the mapping below).
+set hlsearch
+set incsearch
 
-" Color scheme and GUI font
+" Do not redraw while executing macros (good performance config)
+set lazyredraw 
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+
+" Set how many tenths of a second to blink when match is found
+set mat=2
+
+" Instead of failing a command because of unsaved changes,
+" raise a dialogue asking if you wish to save
+set confirm
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set timeoutlen=500
+
+
+" --------------------------------------------------------------
+" -> Color and font
+" --------------------------------------------------------------
+" Enable syntax highlighting
+syntax on
+
+" Set background color to dark
+set background=dark
+
+" Set colorscheme and GUI font
 colorscheme evening
 set guifont=Monofur:h12
 
-" Set default window position, length and width
-winpos 100 100
-set lines=48 columns=120
+" Set window length and width
+set lines=50 columns=100
+
+" Set UTF-8 as standard encoding and
+" en_US as the standard language
+set encoding=UTF-8
+
+" Use Unix as the standard file type
+set fileformats=unix,dos
 
 
+" --------------------------------------------------------------
+" -> Backup, undo and swap
+" --------------------------------------------------------------
+" Turn off backup, writebackup, undo and swap file
+set nobackup
+set nowritebackup
+set noundofile
+set noswapfile
 
-"-----------------------------------------------------------------
-" Mappings
-"
-" These options are useful mappings for efficient editing.
-"
-"-----------------------------------------------------------------
-"
-" Map ,e to edit the vimrc file.
-nnoremap ,e :e C:\Program\ Files\ (x86)\Vim\_vimrc<CR>
 
-" Map ,f to close the file without saving.
-map ,f :q!<CR>
-
-" Map ,w to write and close the file.
-map ,w :wq<CR>
-
-" Map ,a to write and close ALL the files.
-map ,a :wqa<CR>
-
+" --------------------------------------------------------------
+" -> Fold, tab and indent
+" --------------------------------------------------------------
 " Map ,z to create fold based on indent.
-map ,z :set foldmethod=indent<CR>
-
-" Map ,ss to start spell check.
-map ,ss :setlocal spell!<CR>
-
-" Map Shift-Tab to go to previous buffer.
-map <s-tab> :bp<CR>
-" Map Tab to go to next buffer.
-map <tab> :bn<CR>
+nmap <silent> <leader>z :set foldmethod=indent<CR>
 
 " Map <space> to open and close fold in file.
 nnoremap <silent> <space> @=(foldlevel('.')?'za':"\<space>")<CR>
 
+" Use spaces instead of tab
+set expandtab
+
+" Be smart when using tab
+set smarttab
+
+" 1 tab is replaced with 2 spaces
+set shiftwidth=2
+set tabstop=2
+
+" Number of spaces that a <tab> counts for when performing
+" editing operations
+set softtabstop=2
+
+" Round indent to multiple of shiftwidth
+set shiftround
+
+" When opening a new line and no filetype specific indent is
+" enabled, keep the same indent as the line you are currently
+" on. Useful for README, for example
+set autoindent
+
+" Do smart autoindent when starting a new line
+set smartindent
+
+" Wrap the long lines when displaying
+set wrap
+
+
+" --------------------------------------------------------------
+" -> Visual mode
+" --------------------------------------------------------------
+" Visual mode pressing * or # searches for the current selection
+" Idea from Michael Naumann
+vnoremap <silent> * :<C-U>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-U>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+
+" --------------------------------------------------------------
+" -> Movement, tab and buffer
+" --------------------------------------------------------------
 " Map <C-L> (redraw screen) to also turn off search highlighting
 " until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+" Convenient way to move between windows
+map <leader>j <C-W>j
+map <leader>k <C-W>k
+map <leader>h <C-W>h
+map <leader>l <C-W>l
+
+" Mappings for managing tabs
+map <leader>t :tabnew<CR>
+map <leader>to :tabonly<CR>
+map <leader>tc :tabclose<CR>
+map <leader>tn :tabnext<CR>
+map <leader>tp :tabprevious<CR>
+map <leader>tm :tabmove<CR>
+
+" Let tl toggle between this and the most recently accessed tab
+let g:lasttab = 1
+nmap <leader>tl :exe "tabn ".g:lasttab<CR>
+autocmd TabLeave * let g:lasttab = tabpagenr()
+
+" Opens a new tab with the current buffer's path
+" Useful when editing files in the same directory
+map <leader>te :tabedit <C-R>=expand("%:p:h")<CR>/
+
+" Close the current buffer
+map <leader>bd :bd<CR>
+
+" Close all the buffers
+map <leader>ba :bufdo bd<CR>
+
+" Map tab to go to the next buffer and shift-tab to go to the
+" previous buffer
+map <tab> :bnext<CR>
+map <s-tab> :bprevious<CR>
 
 
-"-----------------------------------------------------------------
-" Autocmds
-"
-" Auto commands. Commands that will be executed automatically or
-" triggered by certain conditions.
-"
-"-----------------------------------------------------------------
-"
-" When _vimrc is modified, reload it.
-autocmd! bufwritepost _vimrc source C:\Program Files (x86)\Vim\_vimrc
+" --------------------------------------------------------------
+" -> Status line
+" --------------------------------------------------------------
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=%F\ %y\ %m%r:\ %l/%L,\ %c\ %=\ CWD:\ %{getcwd()}\ line:\ %p%%\ /\ display:\ %P
 
 
+" --------------------------------------------------------------
+" -> Editing mapping
+" --------------------------------------------------------------
+" Map 0 to first non-blank character
+map 0 ^
 
-"-----------------------------------------------------------------
-" Personal plugins
-"
-" These plugins are configured personally, which greatly enhance
-" the efficiency of using Vim.
-"
-"-----------------------------------------------------------------
-"
-" Doorkeeper of all my vim plugins.
-" Pathogen is a vim plugin manager.
-call pathogen#infect()
+" Move a line of text using ctrl [jk], normal and visual mode
+nmap <C-J> mz:m+<CR>`z
+nmap <C-K> mz:m-2<CR>`z
+vmap <C-J> :m'>+<CR>`<my`>mzgv`yo`z
+vmap <C-K> :m'<-2<CR>`>my`<mzgv`yo`z
 
+" Map ,e to edit the vimrc file
+nnoremap <leader>e :e C:\Program\ Files\ (x86)\Vim\_vimrc<CR>
 
+" Map ,q to exit without saving, and add 'a' for all
+map <leader>q :q!<CR>
+map <leader>aq :qa!<CR>
 
-"-----------------------------------------------------------------
-" SuperTab plugin
-"
-" SuperTab allows you to perform all your insert completion
-" using <tab>
-"
-"-----------------------------------------------------------------
-"
-" Set <c-p> to go forward (previous), <c-n> to go backward (next).
-let g:SuperTabMappingForward  = '<c-p>'
-let g:SuperTabMappingBackward = '<c-n>'
-
-" Enable SuperTab longest match support
-let g:SuperTabLongestEnhanced = 1
+" Map ,w to save without exiting, and add 'a' for all
+map <leader>w :wq<CR>
+map <leader>aw :wqa<CR>
 
 
+" --------------------------------------------------------------
+" -> Spell check
+" --------------------------------------------------------------
+" Pressing ,ss will toggle spell check
+map <leader>ss :setlocal spell!<CR>
 
-"-----------------------------------------------------------------
-" vim-gitgutter plugin
-"
-" Display the difference in real time.
-" vim-gitgutter is disabled in branch 'gvim-light'
-"
-"-----------------------------------------------------------------
-"
-" Set the update time for display.
-"set updatetime=1000
+" Move to next or previous misspelled word
+map <leader>sp [s
+map <leader>sn ]s
 
 
+" --------------------------------------------------------------
+" -> Misc
+" --------------------------------------------------------------
+" Toggle paste mode
+set pastetoggle=<F2>
 
-"-----------------------------------------------------------------
-" CtrlP plugin
-"
-" Full path fuzzy file/buffer/mru/tag finder.
-"
-"-----------------------------------------------------------------
-"
-" Map ctrl + p to invoke CtrlP
-let g:ctrlp_map = '<C-p>'
-let g:ctrlp_cmd = 'CtrlP'
+" Remove the Windows ^M when the encodings gets messed up
+noremap <leader>m mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
 
-" Set CtrlP working directory to be the directory of the current file
-let g:ctrlp_working_path_mode = 'ra'
+" Return to last edit position when opening files
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" If a file is already open, open it again in a new pane
-let g:ctrlp_switch_buffer = 'et'
+" Delete trailing white space on save, for some file types
+autocmd BufWritePre *.txt,*.js,*.sh,*.py :call CleanTrailingSpace()
 
-
-
-"-----------------------------------------------------------------
-" auto-pairs plugin
-"
-" Auto close paired characters.
-"
-"-----------------------------------------------------------------
-"
-" Disable fly mode
-let g:AutoPairsFlyMode = 0
+" When vimrc is modified, reload it automatically
+autocmd BufWritePost _vimrc source C:\Program\ Files\ (x86)\Vim\_vimrc
 
 
-
-"-----------------------------------------------------------------
-" tagbar plugin
-"
-" Create tags according to the file. Similar to taglist.
-" tagbar is disabled in branch 'gvim-light'
-"
-"-----------------------------------------------------------------
-"
-" Map F7 to toggle taglist.
-"nnoremap <F7> :TagbarToggle<CR>
-
-" Set the width of tagbar window to 32
-"let g:tagbar_width = 32
+" --------------------------------------------------------------
+" -> Plugin
+" --------------------------------------------------------------
+" Plugin configurations are sourced externally
+source C:\Program\ Files\ (x86)\Vim\plugin.vim
 
 
+" --------------------------------------------------------------
+" -> Function
+" --------------------------------------------------------------
+" Get visual selection content
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! gvy"
 
-"-----------------------------------------------------------------
-" nerdcommenter plugin
-"
-" Use <C-m> to comment and uncomment.
-"
-"-----------------------------------------------------------------
-"
-" Map ctrl + m to toggle comment.
-map <C-m> <leader>c<space>
+  let l:pattern = escape(@", "\\/.*'$^~[]")
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-" Add spaces after comment delimiters by default.
-let g:NERDSpaceDelims = 1
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
 
-" Use compact syntax for prettified multi-line comments.
-let g:NERDCompactSexyComs = 1
+" Function for cleaning trailing spaces
+function! CleanTrailingSpace()
+  let backup_cursor = getpos(".")
+  let backup_query  = getreg("/")
 
-" Align line-wise comment delimiters flush left
-let g:NERDDefaultAlign = 'left'
-
-" Enable trimming of trailing white space when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-
-
-"-----------------------------------------------------------------
-" acp plugin
-"
-" Auto completion popup (AutoComplPop) for vim
-" 
-"-----------------------------------------------------------------
-"
-" Set up acp for snipMate plugin.
-let g:acp_behaviorSnipmateLength = 1
-
-" Disable auto-popup by moving cursor in insert mode.
-let g:acp_mappingDriven = 1
-
-
-
-"-----------------------------------------------------------------
-" undotree plugin
-"
-" List out all the undos.
-" 
-"-----------------------------------------------------------------
-"
-" Map F5 to toggle the undotree window.
-nnoremap <F5> :UndotreeToggle<CR>
-
-" If undotree is opened, it is likely that interaction is expected.
-" Set focus on undotree windows.
-let g:undotree_SetFocusWhenToggle = 1
-
-
-
-"-----------------------------------------------------------------
-" NERDTree plugin
-"
-" NERDTree file explorer plugin.
-" 
-"-----------------------------------------------------------------
-"
-" Map F6 to toggle the NERDTree window.
-nnoremap <F6> :NERDTreeToggle<CR>
-
-" Let nerdtree show hidden files
-let g:NERDTreeShowHidden = 1
-
-" Close vim when NERDTree windows is the last window.
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-
-
-"-----------------------------------------------------------------
-" vim-airline plugin
-"
-" Powerful vim statusline style.
-" 
-"-----------------------------------------------------------------
-"
-" Set vim airline style
-let g:airline_theme = 'dark'
-
-
-
-"-----------------------------------------------------------------
-" vim-latex plugin
-"
-" latex-suite for vim.
-"
-"-----------------------------------------------------------------
-"
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files
-" defaults to 'plaintex' instead of 'tex', which results in
-" vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor = 'latex'
-let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_MultipleCompileFormats= 'pdf'
-let g:Tex_ViewRule_pdf = 'SumatraPDF'
-
-
-
-"-----------------------------------------------------------------
-" End of the _vimrc file.
-"
-"-----------------------------------------------------------------
+  " Find one or more spaces followed by eol and replace
+  silent! %s/\s\+$//e
+  call setpos(".", back_cursor)
+  call setreg("/", backup_query)
+endfunction
