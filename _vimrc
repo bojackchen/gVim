@@ -234,8 +234,8 @@ vnoremap <silent> # :<C-U>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 nnoremap <C-L> :nohl<CR><C-L>
 
 " Convenient way to move between windows
-map <leader>j <C-W>j
-map <leader>k <C-W>k
+nnoremap <leader>j <C-W>j
+nnoremap <leader>k <C-W>k
 nnoremap <leader>h <C-W>h
 nnoremap <leader>l <C-W>l
 
