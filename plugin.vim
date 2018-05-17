@@ -61,11 +61,11 @@ let g:SuperTabLongestEnhanced = 1
 " Set the display update time
 "set updatetime=800
 
-" Map ,d to toggle gitgutter
-"nmap <silent> <leader>d :GitGutterToggle<CR>
+" Map ,gd to toggle gitgutter
+"nmap <silent> <leader>gd :GitGutterToggle<CR>
 
-" Map ,l to toggle line highlight
-"nmap <silent> <leader>l :GitGutterLineHighlightsToggle<CR>
+" Map ,gl to toggle line highlight
+"nmap <silent> <leader>gl :GitGutterLineHighlightsToggle<CR>
 
 
 " --------------------------------------------------------------
@@ -221,5 +221,5 @@ let g:airline#extensions#tabline#enabled = 1
 let g:tex_flavor = "latex"
 let g:Tex_CompileRule_pdf = "pdflatex -interaction=nonstopmode $*"
 let g:Tex_DefaultTargetFormat = "pdf"
-let g:Tex_MiltipleCompileFormats = "pdf"
+let g:Tex_MultipleCompileFormats = "pdf"
 let g:Tex_ViewRule_pdf = "SumatraPDF"
