@@ -12,18 +12,18 @@
 "
 "
 " Sections:
-"   -> Pathogen
-"   -> SuperTab
-"   -> GitGutter
-"   -> CtrlP
-"   -> Auto-Pairs
-"   -> Tagbar
-"   -> NerdCommenter
-"   -> AutoComplPop
-"   -> UndoTree
-"   -> NerdTree
-"   -> vim-airline
-"   -> vim-latex
+"   -> Pathogen : https://github.com/tpope/vim-pathogen.git
+"   -> SuperTab : https://github.com/ervandew/supertab.git
+"   -> GitGutter : https://github.com/airblade/vim-gitgutter.git
+"   -> CtrlP : https://github.com/kien/ctrlp.vim.git
+"   -> Auto-Pairs : https://github.com/jiangmiao/auto-pairs.git
+"   -> Tagbar : https://github.com/majutsushi/tagbar.git
+"   -> NerdCommenter : https://github.com/scrooloose/nerdcommenter.git
+"   -> AutoComplPop : https://github.com/othree/vim-autocomplpop.git
+"   -> UndoTree : https://github.com/mbbill/undotree.git
+"   -> NerdTree : https://github.com/scrooloose/nerdtree.git
+"   -> vim-airline : https://github.com/vim-airline/vim-airline.git
+"   -> vim-latex : https://github.com/vim-latex/vim-latex.git
 "
 " --------------------------------------------------------------
 

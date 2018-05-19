@@ -284,11 +284,11 @@ set statusline=%F\ %y\ %m%r:\ %l/%L,\ %c\ %=\ CWD:\ %{getcwd()}\ line:\ %p%%\ /\
 " Map 0 to first non-blank character
 nnoremap 0 ^
 
-" Move a line of text using ctrl [JK], normal and visual mode
-nnoremap <C-J> mz:m+<CR>`z
-nnoremap <C-K> mz:m-2<CR>`z
-vnoremap <C-J> :m'>+<CR>`<my`>mzgv`yo`z
-vnoremap <C-K> :m'<-2<CR>`>my`<mzgv`yo`z
+" Move a line of text using ctrl [DU], normal and visual mode
+nnoremap <C-D> mz:m+<CR>`z
+nnoremap <C-U> mz:m-2<CR>`z
+vnoremap <C-D> :m'>+<CR>`<my`>mzgv`yo`z
+vnoremap <C-U> :m'<-2<CR>`>my`<mzgv`yo`z
 
 " Map ,e to edit the vimrc file
 nnoremap <leader>e :e C:\Program\ Files\ (x86)\Vim\_vimrc<CR>
