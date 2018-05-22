@@ -163,7 +163,7 @@ set lines=50 columns=128
 " language
 set encoding=UTF-8
 
-" Use Unix as the standard file type
+" Use dos as the standard file type
 set fileformat=dos
 set fileformats=dos,unix
 
