@@ -164,7 +164,8 @@ set lines=50 columns=128
 set encoding=UTF-8
 
 " Use Unix as the standard file type
-set fileformats=unix,dos
+set fileformat=dos
+set fileformats=dos,unix
 
 
 " --------------------------------------------------------------
