@@ -82,11 +82,6 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc,.DS_Store
 
-" Highlight current line with bold font, darkgray background
-" and white foreground
-set cursorline
-hi CursorLine term=bold cterm=bold ctermbg=DarkGray ctermfg=White
-
 " Display the cursor position on the last line of the screen or
 " in the status line of the window.
 set ruler
@@ -155,6 +150,13 @@ set background=dark
 " Set colorscheme and GUI font
 colorscheme evening
 set guifont=Monofur:h12
+
+" Highlight current line with bold font, dark shadow background
+" Both for color terminal and gui window
+" Color code 59: Grey 37
+set cursorline
+hi CursorLine cterm=bold ctermbg=59 ctermfg=NONE
+hi CursorLine gui=bold guibg=#666666 guifg=NONE
 
 " Set window length and width
 set lines=50 columns=128
