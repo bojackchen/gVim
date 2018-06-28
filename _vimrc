@@ -364,6 +364,6 @@ function! CleanTrailingSpace()
 
   " Find one or more spaces followed by eol and replace
   silent! %s/\s\+$//e
-  call setpos(".", back_cursor)
+  call setpos(".", backup_cursor)
   call setreg("/", backup_query)
 endfunction
