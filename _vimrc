@@ -148,7 +148,7 @@ syntax on
 set background=dark
 
 " Set colorscheme and GUI font
-colorscheme evening
+colorscheme desert
 set guifont=Monofur:h12
 
 " Highlight current line with bold font, dark shadow background
