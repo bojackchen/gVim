@@ -163,7 +163,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " Automatic completion popup menu for VIM
 " --------------------------------------------------------------
 " Set up acp for snipMate plugin
-let g:acp_behaviorSnipmateLength = 1
+" let g:acp_behaviorSnipmateLength = 1
 
 " Disable auto-popup when moving cursor in insert mode
 let g:acp_mappingDriven = 1
