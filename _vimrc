@@ -297,7 +297,7 @@ vnoremap <C-U> :m'<-2<CR>`>my`<mzgv`yo`z
 nnoremap <leader>e :e C:\Program\ Files\ (x86)\Vim\_vimrc<CR>
 
 " Map ,p to edit the plugin.vim file
-nnoremap <leader>e :e C:\Program\ Files\ (x86)\Vim\plugin.vim<CR>
+nnoremap <leader>p :e C:\Program\ Files\ (x86)\Vim\plugin.vim<CR>
 
 " Map ,q to exit without saving, and add 'a' for all
 nnoremap <leader>q :q!<CR>
