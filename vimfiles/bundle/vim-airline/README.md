@@ -185,6 +185,9 @@ vim-airline integrates with a variety of plugins out of the box.  These extensio
 #### [localsearch][54]
 ![image](https://raw.githubusercontent.com/mox-mox/vim-localsearch/master/vim-airline-localsearch-indicator.png)
 
+#### [LanguageClient][57]
+![image](https://user-images.githubusercontent.com/9622/45275524-52f45c00-b48b-11e8-8b83-a66240b10747.gif)
+
 ## Extras
 
 vim-airline also supplies some supplementary stand-alone extensions.  In addition to the tabline extension mentioned earlier, there is also:
@@ -266,7 +269,7 @@ The [minivimrc][7] project has some helper mappings to troubleshoot performance 
 
 If you don't want all the bells and whistles enabled by default, you can define a value for `g:airline_extensions`.  When this variable is defined, only the extensions listed will be loaded; an empty array would effectively disable all extensions (e.g. `:let g:airline_extensions = []`).
 
-Also, you can enable caching of the various syntax highlighting groups. This will try to prevent some of the more expensive `:hi` calls in Vim, which seem to be expensive in the Vim core at the expense of possibly not being hunderet percent correct all the times (especially if you often change highlighting groups yourself using `:hi` commands). To set this up do `:let g:airline_highlighting_cache = 1`. A `:AirlineRefresh` will however clear the cache.
+Also, you can enable caching of the various syntax highlighting groups. This will try to prevent some of the more expensive `:hi` calls in Vim, which seem to be expensive in the Vim core at the expense of possibly not being one hundred percent correct all the time (especially if you often change highlighting groups yourself using `:hi` commands). To set this up do `:let g:airline_highlighting_cache = 1`. A `:AirlineRefresh` will however clear the cache.
 
 In addition you might want to check out the [dark_minimal theme][56], which does not change highlighting groups once they are defined. Also please check the [FAQ][27] for more information on how to diagnose and fix the problem.
 
@@ -340,3 +343,4 @@ MIT License. Copyright (c) 2013-2017 Bailey Ling & Contributors.
 [54]: https://github.com/mox-mox/vim-localsearch
 [55]: https://github.com/k-takata/minpac/
 [56]: https://github.com/vim-airline/vim-airline-themes/blob/master/autoload/airline/themes/dark_minimal.vim
+[57]: https://github.com/autozimu/LanguageClient-neovim

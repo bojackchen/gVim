@@ -417,7 +417,7 @@ function! Tex_GetMainFileName(...)
 	" move up the directory tree until we find a .latexmain file.
 	" TODO: Should we be doing this recursion by default, or should there be a
 	"       setting?
-	while glob('*.latexmain',v:true) == ''
+	while glob('*.latexmain', 1) == ''
 		let dirmodifier = dirmodifier.':h'
 		let dirNew = fnameescape(expand(dirmodifier))
 		" break from the loop if we cannot go up any further.
@@ -428,7 +428,7 @@ function! Tex_GetMainFileName(...)
 		exe 'cd '.dirLast
 	endwhile
 
-	let lheadfile = glob('*.latexmain',v:true)
+	let lheadfile = glob('*.latexmain', 1)
 	if lheadfile != ''
 		" Remove the trailing .latexmain part of the filename... We never want
 		" that.
@@ -991,7 +991,7 @@ exe 'source '.fnameescape(s:path.'/version.vim')
 " SetTeXOptions: sets options/mappings for this file. {{{
 function! <SID>SetTeXOptions()
 	" Avoid reinclusion.
-	if exists('b:doneSetTeXOptions')
+	if exists('b:doneSetTeXOptions') || &ft ==# "bib"
 		return
 	endif
 	let b:doneSetTeXOptions = 1
@@ -1127,7 +1127,7 @@ if exists('*readfile')
 elseif Tex_UsePython()
 	function! Tex_CatFile(filename)
 		" catFile assigns a value to retval
-		exec g:Tex_PythonCmd . ' catFile("'.a:filename.'")'
+		exec g:Tex_PythonCmd . ' catFile(r"'.a:filename.'")'
 
 		return retval
 	endfunction
